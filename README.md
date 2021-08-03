@@ -247,6 +247,8 @@ The templates used for server and peer confs are saved under `/config/templates`
 
 Provided your DNS is properly configured on the device you're using, and you're connected to WireGuard, you can now navigate to http://pi.hole/admin and it should take you right to the pihole admin interface.
 
+Note: The IP used here is only accessible by your VPN-connected Clients. You may want to/need to set up a separate record for both your Local Network and your VPN.
+
 ---
 ## Support Info
 
