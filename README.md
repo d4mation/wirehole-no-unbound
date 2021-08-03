@@ -1,5 +1,5 @@
 ## What is this?
-WireHole is a combination of WireGuard and PiHole in a docker-compose project with the intent of enabling users to quickly and easily create and deploy a personally managed full or split-tunnel WireGuard VPN with ad blocking capabilities (via Pihole).
+WireHole (no Unbound) is a fork of [WireHole](https://github.com/IAmStoxe/wirehole) and is a combination of WireGuard and PiHole in a docker-compose project with the intent of enabling users to quickly and easily create and deploy a personally managed full or split-tunnel WireGuard VPN with ad blocking capabilities (via Pihole).
 
 ## Author
 
@@ -48,8 +48,8 @@ Simply pulling `linuxserver/wireguard` should retrieve the correct image for you
 To get started all you need to do is clone the repository and spin up the containers.
 
 ```bash
-git clone https://github.com/IAmStoxe/wirehole.git
-cd wirehole
+git clone https://github.com/d4mation/wirehole-no-unbound.git
+cd wirehole-no-unbound
 docker-compose up
 ```
 ### Full Setup
@@ -82,8 +82,8 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-
     sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 # wirehole
-git clone https://github.com/IAmStoxe/wirehole.git &&
-    cd wirehole &&
+git clone https://github.com/d4mation/wirehole-no-unbound.git &&
+    cd wirehole-no-unbound &&
     docker-compose up
 
 ```
