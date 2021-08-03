@@ -1,5 +1,5 @@
 ## What is this?
-WireHole is a combination of WireGuard, PiHole, and Unbound in a docker-compose project with the intent of enabling users to quickly and easily create and deploy a personally managed full or split-tunnel WireGuard VPN with ad blocking capabilities (via Pihole), and DNS caching with additional privacy options (via Unbound). 
+WireHole is a combination of WireGuard and PiHole in a docker-compose project with the intent of enabling users to quickly and easily create and deploy a personally managed full or split-tunnel WireGuard VPN with ad blocking capabilities (via Pihole).
 
 ## Author
 
@@ -141,7 +141,7 @@ wireguard    | [services.d] starting services
 
 ## Recommended configuration / Split tunnel:
 
-Modify your wireguard client `AllowedIps` to `10.2.0.0/24` to only tunnel the web panel and DNS traffic.
+The WireGuard client is configured with `AllowedIps` set to `10.2.0.0/24` to only tunnel the web panel and DNS traffic by default. Comment out this line to run all your network traffic through the VPN.
 
 ---
 
@@ -159,14 +159,14 @@ While connected to WireGuard, navigate to http://10.2.0.100/admin
 If you're using a dynamic DNS provider, you can edit `docker-compose.yml` under "wireguard". 
 Here is an excerpt from the file. 
 
-You need to uncomment `#- SERVERURL` so it reads `- SERVERURL` without the `#` and then change `my.ddns.net` to your DDNS URL.
+You need to uncomment `#- SERVERURL` so it reads `- SERVERURL` without the `#` and then change `my.ddns.net` to your DDNS URL. Alternatively, you can provide your Public IP here.
 
 ```yaml
 wireguard:
    # ...
     environment:
       # ...
-      - SERVERURL=my.ddns.net #optional - For use with DDNS (Uncomment to use)
+      - SERVERURL=my.ddns.net #optional - For use with DDNS Otherwise provide your public IP (Uncomment to use)
       # ...
  # ...
 ```
@@ -236,45 +236,6 @@ To display the QR codes of active peers again, you can use the following command
 The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg0.conf` and restarting the container.
 
 *(This portion of documentation has been adapted from [docker-wireguard](https://github.com/linuxserver/docker-wireguard/blob/master/README.md))*
-
----
-
-## Modifying the upstream DNS provider for Unbound
-If you choose to not use Cloudflare any reason you are able to modify the upstream DNS provider in `unbound.conf`.
-
-Search for `forward-zone` and modify the IP addresses for your chosen DNS provider.
-
->**NOTE:** The anything after `#` is a comment on the line. 
-What this means is it is just there to tell you which DNS provider you put there. It is for you to be able to reference later. I recommend updating this if you change your DNS provider from the default values.
-
-
-```yaml
-forward-zone:
-        name: "."
-        forward-addr: 1.1.1.1@853#cloudflare-dns.com
-        forward-addr: 1.0.0.1@853#cloudflare-dns.com
-        forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
-        forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
-        forward-tls-upstream: yes
-```
-
----
-
-## Available DNS Providers
-
-While you can actually use any upstream provider you want, the team over at pi-hole.net provide a fantastic break down along with all needed information of some of the more popular providers here:
-https://docs.pi-hole.net/guides/upstream-dns-providers/
-
-Providers they have the information for:
-
-1. Google
-2. OpenDNS
-3. Level3
-4. Comodo
-5. DNS.WATCH
-6. Quad9
-7. CloudFlare DNS
-
 
 ---
 
@@ -362,8 +323,8 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 * [Pi-Hole Community List](https://discourse.pi-hole.net/t/commonly-whitelisted-domains/212)
 * [anudeepND Whitelist](https://github.com/anudeepND/whitelist)
 
-### Why do you use Unbound / What benefit is there to using Unbound?
-* [PiHole Official Site: What does this guide provide?](https://docs.pi-hole.net/guides/unbound/#what-does-this-guide-provide)
+### Why remove Unbound?
+* Unbound is great for privacy, and normally I'm all about that, but additional page load times are pretty large; at least on the Raspberry Pi 2 that I'm running this on. 
 
 ---
 
