@@ -3,3 +3,4 @@ unbound/*
 etc-pihole/
 etc-dnsmasq.d/
 !unbound/unbound.conf
+docker-compose.override.yml
